@@ -1,7 +1,7 @@
 ## Snake (my first game in Python)
 * [x] Podstawowa funkcjonalność
 * [x] Klasy
-  * [ ] Testy
+  * [x] Testy
 * [ ] Food
   * [ ] Dodanie pożywienia
   * [ ] Losowe pojawianie się poza body
