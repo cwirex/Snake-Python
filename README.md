@@ -7,7 +7,8 @@
   * [x] Losowe pojawianie się poza body
   * [x] Jedzenie (head to food)
   * [ ] Testy
-* [ ] Animacja czasu
+* [x] Animacja czasu
+  * [ ] Płynna animacja
 * [x] Kolizje
   * [x] body to border
   * [x] body to body (head to body)
