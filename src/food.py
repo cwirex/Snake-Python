@@ -4,7 +4,7 @@ import random
 
 class Food:
     def __init__(self, block_size, surface):
-        self.color = (255, 150, 0)
+        self.color = (204, 27, 53)
         self.surface = surface
         self.b_size = block_size
         self.width = surface.get_width() // self.b_size

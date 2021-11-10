@@ -1,4 +1,5 @@
 import pygame
+import time
 from pygame.locals import *
 from src.snake import Snake
 from src.food import Food
@@ -8,9 +9,9 @@ class Game:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption('Snake - Python 3.8')
-        self.surface = pygame.display.set_mode((600, 450))
-        self.surface.fill((250, 250, 250))
-        self.block_size = 30
+        self.surface = pygame.display.set_mode((800, 600))
+        self.surface.fill((230, 220, 210))
+        self.block_size = 40
         self.snake = Snake(self.surface, self.block_size)
         self.score = self.Score()
         self.food = Food(self.block_size, self.surface)
@@ -31,27 +32,34 @@ class Game:
 
     def run(self):
         running = True
+        timer = time.time_ns()
         while running:
+            # Scan waiting events
             for event in pygame.event.get():
-                if event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
-                        running = False
-                    else:
-                        self.snake.key_pressed(event.key)
-                elif event.type == QUIT:
+                if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
                     running = False
+                    break
+                elif event.type == KEYDOWN and event.key in [K_LEFT, K_DOWN, K_UP, K_RIGHT]:
+                    self.snake.key_pressed(event.key)
+            # Look for collisions
             if self.head_to_food():
                 self.food.renew(self.snake.body)
-                self.snake.body.insert(1, [self.snake.body[0][0], self.snake.body[0][1]])       # collisions?
+                self.snake.body.insert(1, [self.snake.body[0][0], self.snake.body[0][1]])
             elif self.head_to_body() or self.head_to_border():
                 running = False
+            # Animate time
+            frequency = 10**9/12
+            if time.time_ns() - timer >= frequency:
+                self.snake.move()
+                timer = time.time_ns()
+            # update game window
             self.show()
 
     def head_to_food(self) -> bool:
         return self.snake.body[0] == self.food.position
 
     def head_to_body(self) -> bool:
-        return self.snake.body[0] in self.snake.body[2:]
+        return self.snake.body[0] in self.snake.body[3:]
 
     def head_to_border(self) -> bool:
         if self.snake.body[0][0] < 0 or self.snake.body[0][1] < 0:
@@ -60,7 +68,7 @@ class Game:
             return True
         return False
 
-    def show(self):     # show all components
+    def show(self):
         self.surface.fill((250, 250, 250))
         self.food.show()
         self.snake.show()
