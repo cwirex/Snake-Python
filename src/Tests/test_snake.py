@@ -3,8 +3,9 @@ from src.snake import *
 
 
 class TestSnake(unittest.TestCase):
-    def setUp(self):
-        self.snake = Snake(pygame.display.set_mode((900, 600)))
+    @classmethod
+    def setUpClass(cls):
+        cls.snake = Snake(pygame.display.set_mode((600, 450)), 30)
 
     def test_init(self):
         self.assertIsNotNone(self.snake)
