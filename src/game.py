@@ -1,16 +1,19 @@
 import pygame
 from pygame.locals import *
-from snake import Snake
+from src.snake import Snake
+from src.food import Food
 
 
 class Game:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption('Snake - Python 3.8')
-        self.surface = pygame.display.set_mode((900, 600))
+        self.surface = pygame.display.set_mode((600, 450))
         self.surface.fill((250, 250, 250))
-        self.snake = Snake(self.surface)
+        self.block_size = 30
+        self.snake = Snake(self.surface, self.block_size)
         self.score = self.Score()
+        self.food = Food(self.block_size, self.surface)
 
     class Score:
         def __init__(self):
@@ -37,10 +40,29 @@ class Game:
                         self.snake.key_pressed(event.key)
                 elif event.type == QUIT:
                     running = False
-                self.show()
+            if self.head_to_food():
+                self.food.renew(self.snake.body)
+                self.snake.body.insert(1, [self.snake.body[0][0], self.snake.body[0][1]])       # collisions?
+            elif self.head_to_body() or self.head_to_border():
+                running = False
+            self.show()
 
-    def show(self):
+    def head_to_food(self) -> bool:
+        return self.snake.body[0] == self.food.position
+
+    def head_to_body(self) -> bool:
+        return self.snake.body[0] in self.snake.body[2:]
+
+    def head_to_border(self) -> bool:
+        if self.snake.body[0][0] < 0 or self.snake.body[0][1] < 0:
+            return True
+        if self.snake.body[0][0] >= self.snake.width or self.snake.body[0][1] >= self.snake.height:
+            return True
+        return False
+
+    def show(self):     # show all components
         self.surface.fill((250, 250, 250))
+        self.food.show()
         self.snake.show()
         self.score.score = self.snake.get_score()
         self.score.show(self.surface)
