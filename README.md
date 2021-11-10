@@ -2,10 +2,10 @@
 * [x] Podstawowa funkcjonalność
 * [x] Klasy
   * [x] Testy
-* [ ] Food
-  * [ ] Dodanie pożywienia
-  * [ ] Losowe pojawianie się poza body
-  * [ ] Jedzenie (head to food)
+* [x] Food
+  * [x] Dodanie pożywienia
+  * [x] Losowe pojawianie się poza body
+  * [x] Jedzenie (head to food)
   * [ ] Testy
 * [ ] Animacja czasu
 * [ ] Kolizje
