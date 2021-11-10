@@ -1,16 +1,16 @@
 ## Snake (my first game in Python)
 * [x] Podstawowa funkcjonalność
 * [x] Klasy
-  * [ ] Testy
-* [ ] Food
-  * [ ] Dodanie pożywienia
-  * [ ] Losowe pojawianie się poza body
-  * [ ] Jedzenie (head to food)
+  * [x] Testy
+* [x] Food
+  * [x] Dodanie pożywienia
+  * [x] Losowe pojawianie się poza body
+  * [x] Jedzenie (head to food)
   * [ ] Testy
 * [ ] Animacja czasu
-* [ ] Kolizje
-  * [ ] body to border
-  * [ ] body to body (head to body)
+* [x] Kolizje
+  * [x] body to border
+  * [x] body to body (head to body)
   * [ ] Zablokowanie kolizji w przeciwnym kierunku
   * [ ] Testy
 * [ ] Tablica wyników (operacje na plikach)
