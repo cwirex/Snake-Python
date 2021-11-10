@@ -3,9 +3,10 @@ from pygame.locals import *
 
 
 class Snake:
-    def __init__(self, surface):
+    def __init__(self, surface, block_size):
+        self.color = (30, 240, 10, 200)
         self.surface = surface
-        self.block_size = 30
+        self.block_size = block_size
         self.width = surface.get_width() // self.block_size
         self.height = surface.get_height() // self.block_size
         self.direction = K_RIGHT
@@ -33,12 +34,11 @@ class Snake:
             self.body[0][1] += 1
 
     def show(self):
-        block_color = (30, 240, 10, 200)
         for b in self.body:
             x = b[0] * self.block_size
             y = b[1] * self.block_size
             block = pygame.Rect(x, y, self.block_size, self.block_size)
-            pygame.draw.rect(self.surface, block_color, block)
+            pygame.draw.rect(self.surface, self.color, block)
 
     def get_score(self):
         return len(self.body) - 4
