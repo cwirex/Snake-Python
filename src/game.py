@@ -32,7 +32,7 @@ class Game:
 
     def run(self):
         running = True
-        timer = time.time_ns()
+        time_passed = time.time_ns()
         while running:
             # Scan waiting events
             for event in pygame.event.get():
@@ -48,12 +48,18 @@ class Game:
             elif self.head_to_body() or self.head_to_border():
                 running = False
             # Animate time
-            frequency = 10**9/12
-            if time.time_ns() - timer >= frequency:
+            frequency = 10**9/6
+            if time.time_ns() - time_passed >= frequency:
                 self.snake.move()
-                timer = time.time_ns()
+                time_passed = time.time_ns()
             # update game window
-            self.show()
+            time_part = (time.time_ns() - time_passed)/frequency
+            self.surface.fill((250, 250, 250))
+            self.food.show()
+            self.snake.show(time_part)
+            self.score.score = self.snake.get_score()
+            self.score.show(self.surface)
+            pygame.display.flip()
 
     def head_to_food(self) -> bool:
         return self.snake.body[0] == self.food.position

@@ -42,12 +42,46 @@ class Snake:
         elif self.direction == K_DOWN:
             self.body[0][1] += 1
 
-    def show(self):
-        for b in self.body:
-            x = b[0] * self.block_size
-            y = b[1] * self.block_size
+    def show(self, part):
+        for i in range(1, len(self.body)-1):
+            x = self.body[i][0] * self.block_size
+            y = self.body[i][1] * self.block_size
             block = pygame.Rect(x, y, self.block_size, self.block_size)
             pygame.draw.rect(self.surface, self.color, block)
+
+        # Head
+        b = self.body[0]
+        b_size = self.block_size
+        direction = self.direction
+        x = b[0] * b_size
+        y = b[1] * b_size
+        if direction == K_RIGHT:
+            x += (part - 1) * b_size
+        elif direction == K_LEFT:
+            x += b_size * (1 - part)
+        elif direction == K_UP:
+            y += b_size * (1 - part)
+        elif direction == K_DOWN:
+            y += (part - 1) * b_size
+        block = pygame.Rect(x, y, b_size, b_size)
+        pygame.draw.rect(self.surface, self.color, block)
+        # Tail
+        b = self.body[len(self.body)-1]
+        b_size = self.block_size
+        l = len(self.body)
+        direction = [self.body[l-2][0] - self.body[l-1][0], self.body[l-2][1] - self.body[l-1][1]]
+        x = b[0] * b_size
+        y = b[1] * b_size
+        if direction == [1, 0]:
+            x += part*b_size
+        elif direction == [-1, 0]:
+            x -= part*b_size
+        elif direction == [0, -1]:
+            y -= part*b_size
+        elif direction == [0, 1]:
+            y += part*b_size
+        block = pygame.Rect(x, y, b_size, b_size)
+        pygame.draw.rect(self.surface, self.color, block)
 
     def get_score(self):
         return len(self.body) - 4
