@@ -7,11 +7,13 @@
   * [x] Losowe pojawianie się poza body
   * [x] Jedzenie (head to food)
   * [ ] Testy
-* [ ] Animacja czasu
+* [x] Animacja czasu
+  * [x] Podstawowa animacja
+  * [ ] Płynna animacja
 * [x] Kolizje
   * [x] body to border
   * [x] body to body (head to body)
-  * [ ] Zablokowanie kolizji w przeciwnym kierunku
+  * [x] Zablokowanie kolizji w przeciwnym kierunku
   * [ ] Testy
 * [ ] Tablica wyników (operacje na plikach)
   * [ ] Testy
