@@ -73,11 +73,3 @@ class Game:
         if self.snake.body[0][0] >= self.snake.width or self.snake.body[0][1] >= self.snake.height:
             return True
         return False
-
-    def show(self):
-        self.surface.fill((250, 250, 250))
-        self.food.show()
-        self.snake.show()
-        self.score.score = self.snake.get_score()
-        self.score.show(self.surface)
-        pygame.display.flip()
