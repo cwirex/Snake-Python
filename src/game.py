@@ -38,9 +38,13 @@ class Game:
         while running:
             # Scan pending events
             for event in pygame.event.get():
-                if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                if event.type == QUIT:
                     running = False
                     break
+                elif event.type == KEYDOWN and event.key == K_ESCAPE:
+                    if not self.pause():
+                        running = False
+                        break
                 elif event.type == KEYDOWN and event.key in [K_LEFT, K_DOWN, K_UP, K_RIGHT]:
                     self.snake.key_pressed(event.key)
             # Look for collisions
@@ -62,6 +66,49 @@ class Game:
             self.score.score = self.snake.get_score()
             self.score.show(self.surface)
             pygame.display.flip()
+        self.game_over()
+
+    def start(self):
+        while True:
+            for event in pygame.event.get():
+                if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                    return
+                if event.type == KEYDOWN and event.key == K_SPACE:
+                    self.run()
+                    return
+            self.surface.fill((232, 232, 232))
+            self.line_show("Welcome to Snake!", 88, 0.5)
+            self.line_show("(Press SPACE to start the game)", 36, 0.85)
+            pygame.display.flip()
+
+    def pause(self) -> bool:
+        while True:
+            for event in pygame.event.get():
+                if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                    return False
+                if event.type == KEYDOWN and event.key == K_SPACE:
+                    return True
+            self.surface.fill((232, 232, 232))
+            self.line_show("Game paused", 88, 0.5)
+            self.line_show("(Press SPACE to continue)", 36, 0.85)
+            self.line_show(f"Current score: {self.score.score}", 46, 0.1)
+            pygame.display.flip()
+
+    def game_over(self):
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                    running = False
+                    break
+                if event.type == KEYDOWN and event.key == K_SPACE:
+                    self.snake = Snake(self.surface, self.block_size)
+                    self.run()
+            self.surface.fill((232, 232, 232))
+            self.line_show("Game Over", 68, 0.4)
+            self.line_show(f"Your score: {self.score.score}", 46, 0.5)
+            self.line_show("(Press ESCAPE to quit or SPACE to play again)", 36, 0.85)
+            pygame.display.flip()
 
     def head_to_food(self) -> bool:
         return self.snake.body[0] == self.food.position
@@ -75,3 +122,11 @@ class Game:
         if self.snake.body[0][0] >= self.snake.width or self.snake.body[0][1] >= self.snake.height:
             return True
         return False
+
+    def line_show(self, text, size, height):
+        font = pygame.font.Font(None, size)
+        text = font.render(text, True, (10, 10, 10))
+        textpos = text.get_rect()
+        textpos.centerx = self.surface.get_rect().centerx
+        textpos.centery = self.surface.get_height() * height
+        self.surface.blit(text, textpos)
