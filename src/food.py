@@ -16,9 +16,12 @@ class Food:
         pygame.draw.circle(self.surface, self.color, center, self.b_size * 0.45)
 
     def renew(self, s_body):
-        # zmień sposób losowania na losowanie spośród wolnych pól
-        while True:
-            position = [random.randrange(self.width), random.randrange(self.height)]
-            if position not in s_body:
-                self.position = position
-                break
+        free = []
+        for i in range(self.width):
+            for j in range(self.height):
+                if [i, j] not in s_body:
+                    free.append([i, j])
+        if len(free) == 0:
+            self.position = [-1, -1]
+        else:
+            self.position = random.choice(free)

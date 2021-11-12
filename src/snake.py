@@ -19,7 +19,7 @@ class Snake:
             [start[0] - 3, start[1]]
         ]
 
-    def key_pressed(self, key):
+    def key_pressed(self, key):             # if Key.DIRECTION pressed, change direction
         if key == K_UP and self.direction != K_DOWN:
             self.direction_next = K_UP
         elif key == K_RIGHT and self.direction != K_LEFT:
@@ -29,7 +29,7 @@ class Snake:
         elif key == K_DOWN and self.direction != K_UP:
             self.direction_next = K_DOWN
 
-    def move(self):
+    def move(self):                         # Move Head to next block and update body
         self.body.pop(len(self.body) - 1)
         self.body.insert(0, [self.body[0][0], self.body[0][1]])
         self.direction = self.direction_next
@@ -43,6 +43,7 @@ class Snake:
             self.body[0][1] += 1
 
     def show(self, part):
+        # Draw snake
         my_range = range(1, len(self.body) - 1)
         if self.body[0][0] == self.body[1][0] and self.body[0][1] == self.body[1][1]:
             my_range = range(2, len(self.body)-1)
@@ -51,7 +52,7 @@ class Snake:
             y = self.body[i][1] * self.block_size
             block = pygame.Rect(x, y, self.block_size, self.block_size)
             pygame.draw.rect(self.surface, self.color, block)
-        # Head
+        # Smooth Head
         b = self.body[0]
         b_size = self.block_size
         direction = self.direction
@@ -67,11 +68,11 @@ class Snake:
             y += (part - 1) * b_size
         block = pygame.Rect(x, y, b_size, b_size)
         pygame.draw.rect(self.surface, self.color, block)
-        # Tail
+        # Smooth Tail
         b = self.body[len(self.body)-1]
         b_size = self.block_size
-        l = len(self.body)
-        direction = [self.body[l-2][0] - self.body[l-1][0], self.body[l-2][1] - self.body[l-1][1]]
+        b_len = len(self.body)
+        direction = [self.body[b_len-2][0] - self.body[b_len-1][0], self.body[b_len-2][1] - self.body[b_len-1][1]]
         x = b[0] * b_size
         y = b[1] * b_size
         if direction == [1, 0]:

@@ -7,16 +7,18 @@ from src.food import Food
 
 class Game:
     def __init__(self):
+        # Define game window
         pygame.init()
         pygame.display.set_caption('Snake - Python 3.8')
         self.surface = pygame.display.set_mode((800, 600))
         self.surface.fill((230, 220, 210))
+        # Define game properties
         self.block_size = 40
         self.snake = Snake(self.surface, self.block_size)
         self.score = self.Score()
         self.food = Food(self.block_size, self.surface)
 
-    class Score:
+    class Score:                # Keep and display the current game score
         def __init__(self):
             self.score = 0
             self.font_size = 42
@@ -31,10 +33,10 @@ class Game:
             surface.blit(self.text, self.text_pos)
 
     def run(self):
+        time_passed = time.time_ns()        # Use time to animate the game
         running = True
-        time_passed = time.time_ns()
         while running:
-            # Scan waiting events
+            # Scan pending events
             for event in pygame.event.get():
                 if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
                     running = False
@@ -47,13 +49,13 @@ class Game:
                 self.snake.body.insert(1, [self.snake.body[0][0], self.snake.body[0][1]])
             elif self.head_to_body() or self.head_to_border():
                 running = False
-            # Animate time
+            # Animate
             frequency = 10**9/9
             if time.time_ns() - time_passed >= frequency:
                 self.snake.move()
                 time_passed = time.time_ns()
             time_part = (time.time_ns() - time_passed)/frequency
-            # update game window
+            # show(): Update game window
             self.surface.fill((250, 250, 250))
             self.food.show()
             self.snake.show(time_part)
