@@ -9,7 +9,7 @@
   * [ ] Testy
 * [x] Animacja czasu
   * [x] Podstawowa animacja
-  * [ ] Płynna animacja
+  * [x] Płynna animacja
 * [x] Kolizje
   * [x] body to border
   * [x] body to body (head to body)
