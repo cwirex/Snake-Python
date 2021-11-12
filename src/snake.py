@@ -43,12 +43,14 @@ class Snake:
             self.body[0][1] += 1
 
     def show(self, part):
-        for i in range(1, len(self.body)-1):
+        my_range = range(1, len(self.body) - 1)
+        if self.body[0][0] == self.body[1][0] and self.body[0][1] == self.body[1][1]:
+            my_range = range(2, len(self.body)-1)
+        for i in my_range:
             x = self.body[i][0] * self.block_size
             y = self.body[i][1] * self.block_size
             block = pygame.Rect(x, y, self.block_size, self.block_size)
             pygame.draw.rect(self.surface, self.color, block)
-
         # Head
         b = self.body[0]
         b_size = self.block_size

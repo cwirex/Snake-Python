@@ -48,12 +48,12 @@ class Game:
             elif self.head_to_body() or self.head_to_border():
                 running = False
             # Animate time
-            frequency = 10**9/6
+            frequency = 10**9/9
             if time.time_ns() - time_passed >= frequency:
                 self.snake.move()
                 time_passed = time.time_ns()
-            # update game window
             time_part = (time.time_ns() - time_passed)/frequency
+            # update game window
             self.surface.fill((250, 250, 250))
             self.food.show()
             self.snake.show(time_part)
