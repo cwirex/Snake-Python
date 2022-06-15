@@ -1,4 +1,7 @@
-## Snake (my first game in Python)
+# Snake 
+My first game in Python.
+
+## Feautures
 * [x] Podstawowa funkcjonalność
 * [x] Klasy
     * [x] Testy
